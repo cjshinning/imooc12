@@ -7,38 +7,43 @@ class App extends React.Component {
       num:1,
       title: 'imooc'
     }
-    console.log('构造函数执行')
     this.handleClick = this.handleClick.bind(this)
-    this.item = {react:'redux'}
+    this.handleTitle = this.handleTitle.bind(this)
   }
   handleClick(){
     this.setState({
       num: this.state.num + 1
     })
-    // console.log('xx')
+  }
+  handleTitle(){
+    this.setState({
+      title: this.state.title + '!'
+    })
   }
   render() {
-    // 每次渲染App bind都会执行一次
-    console.log('render执行中')
-    // const item = {react:'redux'}
     return (
       <div>
         <h2>App,{this.state.num}</h2>
-        <button onClick={this.handleClick.bind(this)}>Btn1</button>
-        <button onClick={()=>this.handleClick()}>Btn2</button>
-        <button onClick={this.handleClick}>Btn2</button>
-        <p>每一次都生成新的对象传递</p>
-        {/* <Demo style={{color:'red'}} name={this.item}></Demo> */}
-        {/* <Demo {...this.state}></Demo> */}
+        <button onClick={this.handleClick}>BtnNum</button>
+        <button onClick={this.handleTitle}>BtnTitle</button>
         <Demo title={this.state.title}></Demo>
       </div>
     );
   }
 }
 
-class Demo extends React.Component{
+// class Demo extends React.Component{
+class Demo extends React.PureComponent{
+  // shouldComponentUpdate(nextProps, nextState){
+  //   if(nextProps.title==this.props.title){
+  //     return false
+  //   }
+  //   return true
+  // }
   render(){
-    return <h2>I am Demo</h2>
+    // 每次父组件执行render，子组件传递的Props也会默认render
+    console.log('demo render执行中')
+    return <h2>I am Demo,{this.props.title}</h2>
   }
 }
 
